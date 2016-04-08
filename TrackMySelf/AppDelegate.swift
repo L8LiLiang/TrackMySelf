@@ -6,6 +6,8 @@
 //  Copyright © 2016年 Leon. All rights reserved.
 //
 
+//https://developer.apple.com/library/ios/samplecode/Regions/Introduction/Intro.html
+
 import UIKit
 
 @UIApplicationMain
