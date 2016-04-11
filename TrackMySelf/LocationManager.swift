@@ -24,20 +24,30 @@ class LocationManager: NSObject,CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             
             if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.Denied {
-                manager.systemLocationManager.requestAlwaysAuthorization()
+                if #available(iOS 8.0, *) {
+                    manager.systemLocationManager.requestAlwaysAuthorization()
+                }
             }
             
         }else{
-            let alertVc = UIAlertController(title: "", message: "GPS not open", preferredStyle: .Alert)
-            let okActioin = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
-            alertVc.addAction(okActioin)
-            
-            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alertVc, animated: true, completion: nil)
+            if #available(iOS 8.0, *) {
+                let alertVc = UIAlertController(title: "", message: "GPS not open", preferredStyle: .Alert)
+                let okActioin = UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil)
+                alertVc.addAction(okActioin)
+                
+                UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alertVc, animated: true, completion: nil)
+            } else {
+                // Fallback on earlier versions
+            }
+
         }
         
         
         return manager
     }()
+    
+    
+    
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         switch status {
@@ -54,27 +64,34 @@ class LocationManager: NSObject,CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userDef = NSUserDefaults.standardUserDefaults()
+        let dbStoreToBmob = userDef.boolForKey("DbStoreToBmob")
         
-        if let bmUser = BmobUser.getCurrentUser() {
+        if dbStoreToBmob {
+            if let bmUser = BmobUser.getCurrentUser() {
+                let location = locations.first
+                let object = BmobObject(className: "locations")
+                object.setObject(location?.coordinate.latitude, forKey: "latitude")
+                object.setObject(location?.coordinate.longitude, forKey: "longitude")
+                object.setObject(NSDate(), forKey: "arriveTime")
+                
+                let acl = BmobACL()
+                acl.setReadAccessForUser(bmUser)
+                acl.setWriteAccessForUser(bmUser)
+                object.ACL = acl
+                
+                object.saveInBackgroundWithResultBlock({ (isSuccessful, error) -> Void in
+                    if isSuccessful {
+                        print("save data ok")
+                    }else{
+                        print(error)
+                    }
+                })
+            }
+        }else{
             let location = locations.first
-            let object = BmobObject(className: "locations")
-            object.setObject(location?.coordinate.latitude, forKey: "latitude")
-            object.setObject(location?.coordinate.longitude, forKey: "longitude")
-            
-            let acl = BmobACL()
-            acl.setReadAccessForUser(bmUser)
-            acl.setWriteAccessForUser(bmUser)
-            object.ACL = acl
-            
-            object.saveInBackgroundWithResultBlock({ (isSuccessful, error) -> Void in
-                if isSuccessful {
-                    print("save data ok")
-                }else{
-                    print(error)
-                }
-            })
-        }
-        
+            L8SqlLite.sharedSqlite.addNewLocation((location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
+        }      
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {

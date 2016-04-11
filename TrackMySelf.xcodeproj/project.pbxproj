@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		212042301CBB42DE005BE82E /* L8Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2120422F1CBB42DE005BE82E /* L8Annotation.swift */; };
+		212042321CBB5547005BE82E /* L8AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212042311CBB5547005BE82E /* L8AnnotationView.swift */; };
+		212042341CBB778D005BE82E /* L8SqlLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212042331CBB778D005BE82E /* L8SqlLite.swift */; };
 		21624AE01CA8C96900518773 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21624ADF1CA8C96900518773 /* AppDelegate.swift */; };
 		21624AE21CA8C96900518773 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21624AE11CA8C96900518773 /* ViewController.swift */; };
 		21624AE51CA8C96900518773 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21624AE31CA8C96900518773 /* Main.storyboard */; };
@@ -67,6 +70,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2120422F1CBB42DE005BE82E /* L8Annotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = L8Annotation.swift; sourceTree = "<group>"; };
+		212042311CBB5547005BE82E /* L8AnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = L8AnnotationView.swift; sourceTree = "<group>"; };
+		212042331CBB778D005BE82E /* L8SqlLite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = L8SqlLite.swift; sourceTree = "<group>"; };
 		21624ADC1CA8C96800518773 /* TrackMySelf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackMySelf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		21624ADF1CA8C96900518773 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21624AE11CA8C96900518773 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -198,10 +204,13 @@
 				21624B2E1CA8D82E00518773 /* ObjectiveC */,
 				21624ADF1CA8C96900518773 /* AppDelegate.swift */,
 				21624AE11CA8C96900518773 /* ViewController.swift */,
+				212042331CBB778D005BE82E /* L8SqlLite.swift */,
 				2177ED781CAA122F001F65EA /* LocationManager.swift */,
 				21B1F18E1CA9062500B60870 /* LoginController.swift */,
 				21624B511CA8DC1D00518773 /* VerifySmsCodeController.swift */,
 				21624B531CA8FA7E00518773 /* RegisterController.swift */,
+				2120422F1CBB42DE005BE82E /* L8Annotation.swift */,
+				212042311CBB5547005BE82E /* L8AnnotationView.swift */,
 				21624AE31CA8C96900518773 /* Main.storyboard */,
 				21624AE61CA8C96900518773 /* Assets.xcassets */,
 				21624AE81CA8C96900518773 /* LaunchScreen.storyboard */,
@@ -410,8 +419,11 @@
 				21624AE01CA8C96900518773 /* AppDelegate.swift in Sources */,
 				21624B311CA8D84500518773 /* CXTimer.m in Sources */,
 				21624B4E1CA8DBED00518773 /* Stevia+Stacks.swift in Sources */,
+				212042301CBB42DE005BE82E /* L8Annotation.swift in Sources */,
 				21624B4D1CA8DBED00518773 /* Stevia+Size.swift in Sources */,
 				2177ED791CAA122F001F65EA /* LocationManager.swift in Sources */,
+				212042321CBB5547005BE82E /* L8AnnotationView.swift in Sources */,
+				212042341CBB778D005BE82E /* L8SqlLite.swift in Sources */,
 				21624B481CA8DBED00518773 /* Stevia+GetConstraint.swift in Sources */,
 				21624B431CA8DBED00518773 /* Stevia+Alignment.swift in Sources */,
 				21624B4C1CA8DBED00518773 /* Stevia+Position.swift in Sources */,
@@ -562,6 +574,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = TrackMySelf/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Leon.TrackMySelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -580,6 +593,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = TrackMySelf/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Leon.TrackMySelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";

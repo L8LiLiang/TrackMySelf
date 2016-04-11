@@ -61,29 +61,12 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8AL-Jp-z3B">
                                 <rect key="frame" x="0.0" y="114" width="600" height="486"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wHU-RJ-1GA">
-                                <rect key="frame" x="120" y="285" width="30" height="30"/>
-                                <state key="normal" title="add"/>
-                                <connections>
-                                    <action selector="add:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cpu-3I-HrW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dNZ-Dt-qKS">
-                                <rect key="frame" x="449" y="285" width="31" height="30"/>
-                                <state key="normal" title="read"/>
-                                <connections>
-                                    <action selector="read:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Eao-px-gRz"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="8AL-Jp-z3B" firstAttribute="top" secondItem="byY-ww-yf3" secondAttribute="bottom" constant="8" id="2Fu-b3-IoQ"/>
-                            <constraint firstItem="dNZ-Dt-qKS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3Ya-1K-cpX"/>
                             <constraint firstItem="BkD-vZ-vw3" firstAttribute="width" secondItem="TbJ-Qc-vYb" secondAttribute="width" id="6By-A4-hKI"/>
                             <constraint firstItem="7Bw-1e-QGu" firstAttribute="leading" secondItem="BkD-vZ-vw3" secondAttribute="trailing" constant="4" id="Dn5-I0-2dP"/>
-                            <constraint firstItem="wHU-RJ-1GA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="100" id="E5a-EV-LTh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="dNZ-Dt-qKS" secondAttribute="trailing" constant="100" id="HNR-Y8-XiM"/>
                             <constraint firstItem="BkD-vZ-vw3" firstAttribute="leading" secondItem="TbJ-Qc-vYb" secondAttribute="trailing" constant="4" id="LMD-M9-Ylu"/>
                             <constraint firstItem="8AL-Jp-z3B" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="MLo-zf-Hyd"/>
                             <constraint firstItem="7Bw-1e-QGu" firstAttribute="centerY" secondItem="BkD-vZ-vw3" secondAttribute="centerY" id="T8N-iT-8f8"/>
@@ -96,7 +79,6 @@
                             <constraint firstAttribute="trailing" secondItem="8AL-Jp-z3B" secondAttribute="trailing" id="nKc-aw-dbs"/>
                             <constraint firstItem="BkD-vZ-vw3" firstAttribute="centerY" secondItem="TbJ-Qc-vYb" secondAttribute="centerY" id="tJv-S4-SAJ"/>
                             <constraint firstItem="7Bw-1e-QGu" firstAttribute="width" secondItem="BkD-vZ-vw3" secondAttribute="width" id="vsO-0F-2XQ"/>
-                            <constraint firstItem="wHU-RJ-1GA" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xYv-80-mHw"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
