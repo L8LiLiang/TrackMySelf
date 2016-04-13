@@ -11,7 +11,7 @@ import UIKit
 
 let RegSuccNotifi = "RegisterSuccessNotfi"
 
-class ViewController: UIViewController,MKMapViewDelegate {
+class ViewController: UIViewController,MKMapViewDelegate,LocationManagerDelegate {
 
     @IBOutlet weak var lastTwoDay: UIButton!
     @IBOutlet weak var lastOneDay: UIButton!
@@ -24,7 +24,7 @@ class ViewController: UIViewController,MKMapViewDelegate {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "registerSucceeded:", name: RegSuccNotifi, object: nil)
         mapView.delegate = self
-        mapView.userTrackingMode = MKUserTrackingMode.FollowWithHeading
+        mapView.userTrackingMode = MKUserTrackingMode.Follow
         mapView.showsUserLocation = true
         
         if let bmUser = BmobUser.getCurrentUser() {
@@ -54,6 +54,15 @@ class ViewController: UIViewController,MKMapViewDelegate {
         dbStorePositionSwitch.addTarget(self, action: "changeDbStorePosition:", forControlEvents: .ValueChanged)
         let rightItem = UIBarButtonItem(customView: dbStorePositionSwitch)
         self.navigationItem.rightBarButtonItem = rightItem
+        
+
+        LocationManager.sharedLocationManager.delegate = self
+        let region1 = L8Region(identifier: "soho", latitude: 39.982102, longitude: 116.303802, radius: 300)
+        let region2 = L8Region(identifier: "wlds", latitude: 39.975251, longitude: 116.303802, radius: 100)
+        LocationManager.sharedLocationManager.addMonitorRegion(region1)
+        LocationManager.sharedLocationManager.addMonitorRegion(region2)
+        
+        
     }
 
     func changeDbStorePosition(sw:UISwitch){
@@ -253,11 +262,25 @@ class ViewController: UIViewController,MKMapViewDelegate {
         return render
     }
     
+    func locationManagerDidEnterRegion(manager: LocationManager, region: L8Region) {
+        print("Enter \(region.identifier)")
+        self.makeNotification("Enter \(region.identifier)")
+    }
     
+    func locationManagerDidExitRegion(manager: LocationManager, region: L8Region) {
+        print("Exit \(region.identifier)")
+        self.makeNotification("Exit \(region.identifier)")
+    }
     
     
     deinit{
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func makeNotification(desc:String){
+        let notify = UILocalNotification()
+        notify.alertBody = desc
+        UIApplication.sharedApplication().presentLocalNotificationNow(notify)
     }
 }
 

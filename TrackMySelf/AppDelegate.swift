@@ -20,7 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Bmob.registerWithAppKey("2e9839a30efeff9b35a56432a0039c80")
         
-        LocationManager.sharedLocationManager
+        let type:UIUserNotificationType = [UIUserNotificationType.Badge,UIUserNotificationType.Badge,UIUserNotificationType.Sound]
+        let notificationSetting = UIUserNotificationSettings(forTypes: type, categories: nil)
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSetting)
+        
+        self.makeNotification("AppLaunch")
         
         return true
     }
@@ -48,5 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    func makeNotification(desc:String){
+        let notify = UILocalNotification()
+        notify.alertBody = desc
+        UIApplication.sharedApplication().presentLocalNotificationNow(notify)
+    }
+    
 }
 
