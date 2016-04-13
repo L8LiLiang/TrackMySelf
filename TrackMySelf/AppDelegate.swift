@@ -20,10 +20,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Bmob.registerWithAppKey("2e9839a30efeff9b35a56432a0039c80")
         
-        let type:UIUserNotificationType = [UIUserNotificationType.Badge,UIUserNotificationType.Badge,UIUserNotificationType.Sound]
-        let notificationSetting = UIUserNotificationSettings(forTypes: type, categories: nil)
-        
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSetting)
+        if #available(iOS 8.0, *) {
+            let type:UIUserNotificationType = [UIUserNotificationType.Badge,UIUserNotificationType.Badge,UIUserNotificationType.Sound]
+            let notificationSetting = UIUserNotificationSettings(forTypes: type, categories: nil)
+            
+            UIApplication.sharedApplication().registerUserNotificationSettings(notificationSetting)
+        } else {
+            // Fallback on earlier versions
+//                    [application registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+            let type:UIRemoteNotificationType = [UIRemoteNotificationType.Alert,UIRemoteNotificationType.Badge,UIRemoteNotificationType.Sound]
+            UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
+        }
+
         
         self.makeNotification("AppLaunch")
         

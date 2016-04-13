@@ -12,11 +12,11 @@ class L8Annotation: NSObject,MKAnnotation {
 
     var coordinate:CLLocationCoordinate2D
     var title:String?
-    var subTitle:String
+    var subtitle:String?
     
     init(location:CLLocationCoordinate2D,date:NSDate) {
         self.coordinate = location
-        self.subTitle = "\(location.longitude,location.latitude)"
+        self.subtitle = "\(location.longitude,location.latitude)"
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyy-MM-dd hh:mm:ss"

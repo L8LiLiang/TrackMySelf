@@ -9,7 +9,7 @@
 import UIKit
 
 
-class L8Region:NSObject,NSCoding {
+@objc class L8Region:NSObject,NSCoding {
     
     var latitude:Double
     var longitude:Double
@@ -79,7 +79,7 @@ protocol LocationManagerDelegate{
 
 
 
-class LocationManager: NSObject,CLLocationManagerDelegate {
+@objc class LocationManager: NSObject,CLLocationManagerDelegate {
     
     var systemLocationManager:CLLocationManager!
     var delegate:LocationManagerDelegate?
@@ -102,8 +102,8 @@ class LocationManager: NSObject,CLLocationManagerDelegate {
         
         manager.systemLocationManager = CLLocationManager()
         manager.systemLocationManager.delegate = manager
-        manager.systemLocationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        manager.systemLocationManager.distanceFilter = 100
+        manager.systemLocationManager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.systemLocationManager.distanceFilter = 50
         
         if CLLocationManager.locationServicesEnabled() {
             if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.Denied {
@@ -149,11 +149,14 @@ class LocationManager: NSObject,CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userDef = NSUserDefaults.standardUserDefaults()
-        let dbStoreToBmob = userDef.boolForKey("DbStoreToBmob")
         
         let location = locations.first
         
+        
+        let userDef = NSUserDefaults.standardUserDefaults()
+        let dbStoreToBmob = userDef.boolForKey("DbStoreToBmob")
+        
+        print("UpdateLocation:\(location?.coordinate.latitude,location?.coordinate.longitude)")
         if dbStoreToBmob {
             if let bmUser = BmobUser.getCurrentUser() {
                 let object = BmobObject(className: "locations")
@@ -177,7 +180,7 @@ class LocationManager: NSObject,CLLocationManagerDelegate {
         }else{
             L8SqlLite.sharedSqlite.addNewLocation((location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
         }
-        
+
         dispatch_async(self.queueForProcessMonitorRegion) { () -> Void in
             for region in self.monitorRegions {
                 if region.location.distanceFromLocation(location!) <= region.radius {

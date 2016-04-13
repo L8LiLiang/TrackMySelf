@@ -57,15 +57,22 @@ class ViewController: UIViewController,MKMapViewDelegate,LocationManagerDelegate
         
 
         LocationManager.sharedLocationManager.delegate = self
-        let region1 = L8Region(identifier: "soho", latitude: 39.982102, longitude: 116.303802, radius: 300)
-        let region2 = L8Region(identifier: "wlds", latitude: 39.975251, longitude: 116.303802, radius: 100)
+        let region1 = L8Region(identifier: "Soho", latitude: 39.982102, longitude: 116.303802, radius: 300)
+        let region2 = L8Region(identifier: "WangLuoDaSha", latitude: 39.975251, longitude: 116.303802, radius: 300)
+        let region3 = L8Region(identifier: "BeiDaDongMen", latitude: 39.990614, longitude: 116.309648, radius: 300)
+        let region4 = L8Region(identifier: "ErShiYiShiJiDaSha", latitude: 40.058924, longitude: 116.362304, radius: 300)
+
         LocationManager.sharedLocationManager.addMonitorRegion(region1)
         LocationManager.sharedLocationManager.addMonitorRegion(region2)
+        LocationManager.sharedLocationManager.addMonitorRegion(region3)
+        LocationManager.sharedLocationManager.addMonitorRegion(region4)
         
         
     }
 
     func changeDbStorePosition(sw:UISwitch){
+        let location = LocationManager.sharedLocationManager.systemLocationManager.location
+        print("UserLocation:\(location?.coordinate.latitude,location?.coordinate.longitude)")
         let userDefault = NSUserDefaults.standardUserDefaults()
         if sw.on {
             userDefault.setBool(true, forKey: "DbStoreToBmob")
@@ -280,6 +287,9 @@ class ViewController: UIViewController,MKMapViewDelegate,LocationManagerDelegate
     func makeNotification(desc:String){
         let notify = UILocalNotification()
         notify.alertBody = desc
+        notify.alertAction = "open TrackMySelf"
+        notify.soundName = "UILocalNotificationDefaultSoundName"
+        notify.hasAction = true
         UIApplication.sharedApplication().presentLocalNotificationNow(notify)
     }
 }

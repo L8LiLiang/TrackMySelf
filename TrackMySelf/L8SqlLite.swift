@@ -43,8 +43,8 @@ class L8SqlLite : NSObject{
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
             let timeString = dateFormatter.stringFromDate(NSDate())
-            
-            let sqlString = "insert into locations(latitude,longitude,arriveTime) values(\(latitude),\(longitude),'\(timeString)');"
+            print("AddLocation:\(latitude,longitude)")
+            let sqlString = "insert into locations(latitude,longitude,arriveTime) values('\(latitude)','\(longitude)','\(timeString)');"
             
             if sqlite3_exec(db, sqlString.cStringUsingEncoding(NSUTF8StringEncoding)!, nil, nil, nil) == SQLITE_OK {
                 print("add to sqlite succeeded")
@@ -83,11 +83,20 @@ class L8SqlLite : NSObject{
                     let arriveTimeCString = UnsafePointer<CChar>(sqlite3_column_text(stmt, 2))
                     let arriveTimeString = String(CString: arriveTimeCString, encoding: NSUTF8StringEncoding)
                     let arriveTime = dateFormatter.dateFromString(arriveTimeString!)
+                    
                     if preCreateTime == nil || arriveTime!.timeIntervalSinceDate(preCreateTime!) >= 60 {
                         let latitude = sqlite3_column_double(stmt, 0)
                         let longitude = sqlite3_column_double(stmt, 1)
+                        print("LoadLocation:\(latitude,longitude)")
                         
-                        let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+                        let latitudeCStr = UnsafePointer<CChar>(sqlite3_column_text(stmt, 0))
+                        let latitudeStr = String(CString: latitudeCStr, encoding: NSUTF8StringEncoding)
+                        let longitudeCStr = UnsafePointer<CChar>(sqlite3_column_text(stmt, 1))
+                        let longitudeStr = String(CString: longitudeCStr, encoding: NSUTF8StringEncoding)
+                        let latitude2 = Double(latitudeStr!)
+                        let longitude2 = Double(longitudeStr!)
+                        print("LoadLocation2:\(latitude2,longitude2)")
+                        let coordinate = CLLocationCoordinate2DMake(latitude2!, longitude2!)
                         
                         let annotation = L8Annotation(location: coordinate, date: arriveTime!)
                         self.mapView?.addAnnotation(annotation)
@@ -154,7 +163,7 @@ class L8SqlLite : NSObject{
     
     func createTable() ->Bool {
         if db != nil {
-            let sqlString = "create table if not exists locations(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,latitude DOUBLE,longitude DOUBLE,arriveTime varchar(32));"
+            let sqlString = "create table if not exists locations(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,latitude varchar(32),longitude varchar(32),arriveTime varchar(32));"
             
             return sqlite3_exec(db, sqlString.cStringUsingEncoding(NSUTF8StringEncoding)!, nil, nil, nil) == SQLITE_OK
             
